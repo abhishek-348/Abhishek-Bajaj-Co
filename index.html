@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abhishek Bajaj & Co. | Chartered Accountants | Hyderabad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:       #0c1a35;
+    --navy-mid:   #132244;
+    --navy-light: #1c3060;
+    --gold:       #b8952a;
+    --gold-light: #d4af50;
+    --gold-pale:  #f5ecd4;
+    --gold-xpale: #fdf8ef;
+    --cream:      #faf8f3;
+    --white:      #ffffff;
+    --ink:        #0c1a35;
+    --body:       #3d4f6e;
+    --muted:      #7a8ba8;
+    --border:     #e8e2d5;
+    --border-gold: rgba(184,149,42,0.2);
+    --shadow-sm:  0 2px 8px rgba(12,26,53,0.07);
+    --shadow-md:  0 8px 32px rgba(12,26,53,0.10);
+    --shadow-lg:  0 20px 60px rgba(12,26,53,0.14);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── ICAI COMPLIANCE BANNER ── */
+  .icai-banner {
+    background: var(--navy);
+    color: rgba(255,255,255,0.55);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    padding: 0.5rem 5vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .icai-banner span { display: flex; align-items: center; gap: 0.5rem; }
+  .icai-banner strong { color: rgba(255,255,255,0.8); }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 1.1rem 5vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(250,248,243,0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .nav-logo {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+  }
+
+  .nav-logo-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: 0.01em;
+    line-height: 1.1;
+  }
+
+  .nav-logo-tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    align-items: center;
+  }
+
+  .nav-links a {
+    color: var(--body);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--navy); }
+
+  .nav-cta {
+    background: var(--navy) !important;
+    color: var(--gold-light) !important;
+    padding: 0.55rem 1.4rem !important;
+    border-radius: 3px;
+    font-weight: 600 !important;
+    letter-spacing: 0.06em !important;
+    font-size: 0.8rem !important;
+    text-transform: uppercase !important;
+    border: 1px solid var(--navy) !important;
+    transition: background 0.2s, color 0.2s !important;
+  }
+
+  .nav-cta:hover {
+    background: var(--gold) !important;
+    color: var(--white) !important;
+    border-color: var(--gold) !important;
+  }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 92vh;
+    background: var(--navy);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 5rem 5vw;
+    gap: 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Geometric background pattern */
+  #hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(184,149,42,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(184,149,42,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  #hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 120px;
+    background: var(--cream);
+    clip-path: ellipse(60% 100% at 50% 100%);
+    pointer-events: none;
+  }
+
+  .hero-content { position: relative; z-index: 2; }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    font-weight: 500;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.1s ease forwards;
+  }
+
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: '';
+    display: block;
+    width: 28px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 4.5vw, 5rem);
+    line-height: 1.06;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--white);
+    margin-bottom: 1.8rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.25s ease forwards;
+  }
+
+  h1 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--gold-light);
+  }
+
+  .hero-sub {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.55);
+    max-width: 460px;
+    margin-bottom: 2.8rem;
+    line-height: 1.8;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s ease forwards;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.55s ease forwards;
+  }
+
+  .btn-gold {
+    background: var(--gold);
+    color: var(--navy);
+    padding: 0.85rem 2rem;
+    border-radius: 3px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    display: inline-block;
+    box-shadow: 0 4px 20px rgba(184,149,42,0.35);
+  }
+
+  .btn-gold:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(184,149,42,0.4);
+  }
+
+  .btn-outline-light {
+    background: transparent;
+    color: rgba(255,255,255,0.75);
+    padding: 0.85rem 2rem;
+    border-radius: 3px;
+    font-weight: 500;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+    display: inline-block;
+  }
+
+  .btn-outline-light:hover {
+    border-color: var(--gold);
+    color: var(--gold-light);
+    background: rgba(184,149,42,0.06);
+  }
+
+  /* Hero visual — credentials card */
+  .hero-visual {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    opacity: 0;
+    animation: fadeIn 1s 0.7s ease forwards;
+  }
+
+  .cred-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(184,149,42,0.2);
+    border-radius: 8px;
+    padding: 1.5rem 1.8rem;
+    backdrop-filter: blur(10px);
+  }
+
+  .cred-card-main {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(184,149,42,0.35);
+  }
+
+  .cred-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+  }
+
+  .cred-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.2;
+  }
+
+  .cred-sub {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.4);
+    margin-top: 0.3rem;
+  }
+
+  .cred-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .cred-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(184,149,42,0.12);
+    border: 1px solid rgba(184,149,42,0.25);
+    border-radius: 100px;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.72rem;
+    color: var(--gold-light);
+    font-weight: 500;
+    margin-top: 0.5rem;
+    margin-right: 0.4rem;
+    display: inline-flex;
+  }
+
+  /* ── STATS ── */
+  #stats {
+    background: var(--gold-xpale);
+    border-top: 1px solid var(--border-gold);
+    border-bottom: 1px solid var(--border-gold);
+    padding: 2.8rem 5vw;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .stat-item {
+    text-align: center;
+    padding: 1rem;
+    border-right: 1px solid var(--border-gold);
+  }
+
+  .stat-item:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .stat-num span { color: var(--gold); }
+
+  .stat-label {
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 0.4rem;
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 6rem 5vw; position: relative; }
+
+  .section-tag {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .section-tag::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 3.2rem);
+    line-height: 1.1;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--navy);
+    max-width: 560px;
+    margin-bottom: 1rem;
+  }
+
+  h2 em { font-style: italic; font-weight: 400; color: var(--gold); }
+
+  .section-lead {
+    color: var(--body);
+    font-size: 1rem;
+    max-width: 480px;
+    margin-bottom: 3rem;
+    line-height: 1.8;
+  }
+
+  /* ── SERVICES ── */
+  #services { background: var(--white); }
+
+  .services-intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: end;
+    margin-bottom: 3.5rem;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .service-card {
+    background: var(--white);
+    padding: 2.2rem;
+    transition: background 0.25s;
+    position: relative;
+  }
+
+  .service-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 2.2rem; right: 2.2rem;
+    height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+    transform-origin: left;
+  }
+
+  .service-card:hover { background: var(--gold-xpale); }
+  .service-card:hover::after { transform: scaleX(1); }
+
+  .service-icon {
+    width: 44px; height: 44px;
+    background: var(--gold-xpale);
+    border: 1px solid var(--border-gold);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .service-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.6rem;
+    line-height: 1.3;
+  }
+
+  .service-desc {
+    font-size: 0.86rem;
+    color: var(--body);
+    line-height: 1.7;
+  }
+
+  .service-items {
+    list-style: none;
+    margin-top: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .service-items li {
+    font-size: 0.8rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .service-items li::before {
+    content: '—';
+    color: var(--gold);
+    font-size: 0.7rem;
+  }
+
+  /* ── ABOUT ── */
+  #about {
+    background: var(--cream);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+
+  .about-visual { position: relative; }
+
+  .about-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 2.5rem;
+    box-shadow: var(--shadow-md);
+    position: relative;
+  }
+
+  .about-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--gold) 0%, var(--gold-light) 100%);
+    border-radius: 8px 0 0 8px;
+  }
+
+  .about-card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 0.3rem;
+  }
+
+  .about-card-designation {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-card-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 1.5rem 0;
+  }
+
+  .about-card-detail {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.7rem;
+  }
+
+  .about-card-detail-label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+
+  .about-card-detail-val {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .about-quals {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.2rem;
+  }
+
+  .about-qual {
+    background: var(--gold-xpale);
+    border: 1px solid var(--border-gold);
+    color: var(--gold);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    padding: 0.28rem 0.75rem;
+    border-radius: 2px;
+  }
+
+  .about-float {
+    position: absolute;
+    bottom: -20px;
+    right: -24px;
+    background: var(--navy);
+    color: var(--white);
+    border-radius: 6px;
+    padding: 1.2rem 1.6rem;
+    box-shadow: var(--shadow-lg);
+    z-index: 2;
+  }
+
+  .about-float-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--gold-light);
+    line-height: 1;
+  }
+
+  .about-float-label {
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.5);
+    margin-top: 0.25rem;
+    letter-spacing: 0.06em;
+  }
+
+  .about-checklist {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    margin: 1.8rem 0 2.2rem;
+  }
+
+  .about-checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    font-size: 0.9rem;
+    color: var(--body);
+    line-height: 1.6;
+  }
+
+  .check-icon {
+    width: 20px; height: 20px;
+    min-width: 20px;
+    background: var(--gold-xpale);
+    border: 1px solid var(--border-gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    font-size: 0.6rem;
+    font-weight: 700;
+    margin-top: 2px;
+  }
+
+  /* ── PRACTICE AREAS ── */
+  #practice { background: var(--navy); }
+
+  #practice .section-tag { color: var(--gold-light); }
+  #practice .section-tag::before { background: var(--gold-light); }
+  #practice h2 { color: var(--white); }
+  #practice h2 em { color: var(--gold-light); }
+  #practice .section-lead { color: rgba(255,255,255,0.5); }
+
+  .practice-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .practice-card {
+    border: 1px solid rgba(184,149,42,0.15);
+    border-radius: 6px;
+    padding: 2rem 1.6rem;
+    transition: background 0.25s, border-color 0.25s, transform 0.25s;
+    cursor: default;
+  }
+
+  .practice-card:hover {
+    background: rgba(184,149,42,0.06);
+    border-color: rgba(184,149,42,0.35);
+    transform: translateY(-4px);
+  }
+
+  .practice-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: rgba(184,149,42,0.2);
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .practice-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 0.6rem;
+    line-height: 1.3;
+  }
+
+  .practice-desc {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.7;
+  }
+
+  /* ── COMPLIANCE NOTE ── */
+  #compliance {
+    background: var(--gold-xpale);
+    border-top: 1px solid var(--border-gold);
+    border-bottom: 1px solid var(--border-gold);
+    padding: 3rem 5vw;
+    text-align: center;
+  }
+
+  .compliance-inner {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .compliance-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .compliance-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.6rem;
+  }
+
+  .compliance-text {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  /* ── CONTACT ── */
+  #contact {
+    background: var(--white);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .contact-detail {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .contact-detail-icon {
+    width: 40px; height: 40px;
+    min-width: 40px;
+    background: var(--gold-xpale);
+    border: 1px solid var(--border-gold);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+  }
+
+  .contact-detail-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.2rem;
+  }
+
+  .contact-detail-val {
+    font-size: 0.9rem;
+    color: var(--navy);
+    font-weight: 500;
+  }
+
+  /* Contact form */
+  .contact-form-card {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 2.5rem;
+  }
+
+  .form-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.3rem;
+  }
+
+  .form-sub {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 1.8rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-bottom: 1rem;
+  }
+
+  .form-group label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    padding: 0.78rem 1rem;
+    color: var(--ink);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+    appearance: none;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(184,149,42,0.1);
+  }
+
+  .form-group textarea { resize: vertical; min-height: 90px; }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: var(--muted); opacity: 0.5; }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .select-wrap { position: relative; }
+  .select-wrap::after {
+    content: '▾';
+    position: absolute;
+    right: 1rem; top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-size: 0.8rem;
+    pointer-events: none;
+  }
+
+  .form-submit {
+    width: 100%;
+    background: var(--navy);
+    color: var(--gold-light);
+    border: none;
+    padding: 0.9rem;
+    border-radius: 4px;
+    font-family: 'Jost', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    margin-top: 1.2rem;
+  }
+
+  .form-submit:hover {
+    background: var(--navy-light);
+    transform: translateY(-2px);
+  }
+
+  .form-note {
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 0.8rem;
+  }
+
+  .form-success {
+    display: none;
+    text-align: center;
+    padding: 2rem 0;
+  }
+
+  .form-success-icon {
+    width: 52px; height: 52px;
+    background: var(--gold-xpale);
+    border: 1px solid var(--border-gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    margin: 0 auto 1rem;
+  }
+
+  .form-success-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.4rem;
+  }
+
+  .form-success-sub { font-size: 0.85rem; color: var(--muted); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy);
+    padding: 3rem 5vw 1.5rem;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-brand-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.3rem;
+  }
+
+  .footer-brand-tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .footer-brand-desc {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.35);
+    line-height: 1.75;
+    max-width: 300px;
+  }
+
+  .footer-col-title {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+  }
+
+  .footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .footer-links a {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--gold-light); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-copy {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.22);
+  }
+
+  .footer-icai {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.3);
+    text-align: right;
+  }
+
+  /* ── ICAI DISCLAIMER ── */
+  .disclaimer {
+    background: #0a1529;
+    padding: 1.2rem 5vw;
+    text-align: center;
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.22);
+    line-height: 1.8;
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 960px) {
+    #hero, #about, #contact { grid-template-columns: 1fr; gap: 3rem; }
+    #hero::before { display: none; }
+    .hero-visual { display: none; }
+    .about-visual { display: none; }
+    .services-intro { grid-template-columns: 1fr; gap: 1rem; }
+    .services-grid { grid-template-columns: 1fr; }
+    .practice-grid { grid-template-columns: 1fr 1fr; }
+    #stats { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+    .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+    .form-row { grid-template-columns: 1fr; }
+    .cred-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ICAI COMPLIANCE BANNER -->
+<div class="icai-banner">
+  <span>
+    <strong>Abhishek Bajaj & Co.</strong> | Chartered Accountants | Hyderabad, Telangana
+  </span>
+  <span>Office: Hyderabad, Telangana, India</span>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-name">Abhishek Bajaj & Co.</div>
+    <div class="nav-logo-tag">Chartered Accountants</div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#practice">Practice Areas</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#contact" class="nav-cta">Enquire Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Chartered Accountants — Hyderabad</div>
+    <h1>Trusted counsel for <em>every financial</em> matter.</h1>
+    <p class="hero-sub">Abhishek Bajaj & Co. is a Hyderabad-based CA firm offering comprehensive audit, taxation, and advisory services to businesses and individuals across India.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-gold">Schedule a Consultation</a>
+      <a href="#services" class="btn-outline-light">Our Services</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="cred-card cred-card-main">
+      <div class="cred-label">Principal</div>
+      <div class="cred-value">CA Abhishek Bajaj</div>
+      <div class="cred-sub">B.Com, FCA — ICAI Member</div>
+      <div style="margin-top:1rem">
+        <span class="cred-pill">📋 Audit & Assurance</span>
+        <span class="cred-pill">🧾 Direct & Indirect Tax</span>
+        <span class="cred-pill">⚖️ Company Law</span>
+        <span class="cred-pill">🌐 FEMA / RBI</span>
+      </div>
+    </div>
+    <div class="cred-row">
+      <div class="cred-card">
+        <div class="cred-label">Location</div>
+        <div class="cred-value">Hyderabad</div>
+        <div class="cred-sub">Telangana, India</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div id="stats">
+  <div class="stat-item">
+    <div class="stat-num">Global<span style="font-size:1.2rem"> Reach</span></div>
+    <div class="stat-label">US, UAE, Singapore & More</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">Pan<span> India</span></div>
+    <div class="stat-label">Client Presence</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">ICAI</div>
+    <div class="stat-label">Registered Firm</div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-intro">
+    <div>
+      <div class="section-tag reveal">Our Services</div>
+      <h2 class="reveal">Comprehensive services for <em>every compliance need.</em></h2>
+    </div>
+    <p class="section-lead reveal" style="margin-bottom:0">From statutory audit to GST advisory, we provide end-to-end financial and compliance services tailored to your business requirements.</p>
+  </div>
+
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <div class="service-icon">📋</div>
+      <div class="service-title">Audit & Assurance</div>
+      <p class="service-desc">Statutory, internal, and tax audits conducted with independence and professional scepticism in accordance with Standards on Auditing.</p>
+      <ul class="service-items">
+        <li>Statutory Audit (Companies Act)</li>
+        <li>Tax Audit (Section 44AB)</li>
+        <li>Internal Audit</li>
+        <li>Bank Audit</li>
+        <li>Concurrent Audit</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🧾</div>
+      <div class="service-title">Direct Taxation</div>
+      <p class="service-desc">Comprehensive income tax advisory, compliance, and representation services for corporates, firms, and individuals.</p>
+      <ul class="service-items">
+        <li>Income Tax Return Filing</li>
+        <li>Tax Planning & Advisory</li>
+        <li>TDS Compliance</li>
+        <li>Assessment & Appeals</li>
+        <li>Transfer Pricing</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📊</div>
+      <div class="service-title">GST & Indirect Tax</div>
+      <p class="service-desc">End-to-end GST compliance, advisory, and litigation support for businesses across all sectors and turnover slabs.</p>
+      <ul class="service-items">
+        <li>GST Registration & Returns</li>
+        <li>GST Audit & Reconciliation</li>
+        <li>Input Tax Credit Advisory</li>
+        <li>GST Appeals & Notices</li>
+        <li>E-Way Bill Compliance</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🏢</div>
+      <div class="service-title">Company Law & ROC</div>
+      <p class="service-desc">Corporate compliance, MCA filings, and advisory under the Companies Act 2013 for private and public companies.</p>
+      <ul class="service-items">
+        <li>Company Incorporation</li>
+        <li>ROC Filings & Compliance</li>
+        <li>Board Meeting Secretarial</li>
+        <li>OPC / LLP Formation</li>
+        <li>Strike Off & Winding Up</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🌐</div>
+      <div class="service-title">FEMA & RBI Compliance</div>
+      <p class="service-desc">Advisory and filing support for foreign exchange transactions, FDI, and overseas investment under FEMA regulations.</p>
+      <ul class="service-items">
+        <li>FC-GPR & FC-TRS Filings</li>
+        <li>FDI Compliance</li>
+        <li>ODI Compliance</li>
+        <li>RBI Reporting (FIRMS Portal)</li>
+        <li>Compounding Applications</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">💼</div>
+      <div class="service-title">Business Advisory</div>
+      <p class="service-desc">Financial and management advisory services to support business decisions, restructuring, and strategic planning.</p>
+      <ul class="service-items">
+        <li>Business Valuation</li>
+        <li>Due Diligence</li>
+        <li>Financial Projections</li>
+        <li>MIS & Reporting</li>
+        <li>Startup Advisory</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-visual reveal">
+    <div class="about-card">
+      <div class="about-card-name">CA Abhishek Bajaj</div>
+      <div class="about-card-designation">B.Com · FCA · ICAI Member</div>
+      <div class="about-card-detail">
+        <span class="about-card-detail-label">Qualification</span>
+        <span class="about-card-detail-val">Chartered Accountant (ICAI)</span>
+      </div>
+      <div class="about-card-detail">
+        <span class="about-card-detail-label">ICAI Region</span>
+        <span class="about-card-detail-val">Southern India Regional Council</span>
+      </div>
+      <div class="about-card-detail">
+        <span class="about-card-detail-label">Office</span>
+        <span class="about-card-detail-val">Hyderabad, Telangana</span>
+      </div>
+      <div class="about-card-detail">
+        <span class="about-card-detail-label">Practice Since</span>
+        <span class="about-card-detail-val">Active Certificate of Practice</span>
+      </div>
+      <div class="about-card-divider"></div>
+      <div class="about-quals">
+        <span class="about-qual">ICAI — CA Final</span>
+        <span class="about-qual">QBO ProAdvisor L2</span>
+        <span class="about-qual">GST Practitioner</span>
+        <span class="about-qual">Intuit Certified</span>
+      </div>
+    </div>
+    <div class="about-float">
+      <div class="about-float-num">ICAI</div>
+      <div class="about-float-label">Registered Firm · Hyderabad</div>
+    </div>
+  </div>
+
+  <div class="about-content">
+    <div class="section-tag reveal">About</div>
+    <h2 class="reveal">A CA who understands both <em>the law and the business.</em></h2>
+    <p class="section-lead reveal" style="margin-bottom:0.8rem">CA Abhishek Bajaj is a practising Chartered Accountant based in Hyderabad, registered with the Institute of Chartered Accountants of India (ICAI). He is the founder of Abhishek Bajaj & Co., a full-service CA firm, and also runs Smartbooks Global — a US-focused accounting and bookkeeping practice serving clients across India and internationally.</p>
+    <p style="color:var(--body);font-size:0.9rem;line-height:1.8;margin-bottom:1rem" class="reveal">What sets Abhishek apart is his ability to bridge traditional Indian compliance practice with modern, technology-enabled delivery. He brings hands-on expertise across a wide range of engagements — from statutory audits and GST appeals to FEMA filings, ROC compliance, and cross-border advisory for businesses with international operations.</p>
+    <p style="color:var(--body);font-size:0.9rem;line-height:1.8" class="reveal">He holds a QuickBooks Online ProAdvisor certification (Level 1 & 2) and an Intuit Bookkeeping certification, and has worked with clients across India, the United States, Singapore, Dubai, and Switzerland. His approach is rooted in professional rigour, clear communication, and genuine long-term commitment to every client he serves.</p>
+
+    <ul class="about-checklist reveal">
+      <li><div class="check-icon">✓</div><span>Practising CA registered under ICAI with an active Certificate of Practice</span></li>
+      <li><div class="check-icon">✓</div><span>Deep expertise in GST, Income Tax, FEMA, and Companies Act compliance</span></li>
+      <li><div class="check-icon">✓</div><span>Cross-border experience — clients across the US, UAE, Singapore & Europe</span></li>
+      <li><div class="check-icon">✓</div><span>QuickBooks Online ProAdvisor (L1 & L2) — tech-forward compliance delivery</span></li>
+      <li><div class="check-icon">✓</div><span>Founder of two practices — Indian CA firm and a US-focused accounting firm</span></li>
+    </ul>
+
+    <a href="#contact" class="btn-gold reveal" style="display:inline-block">Get in Touch →</a>
+  </div>
+</section>
+
+<!-- PRACTICE AREAS -->
+<section id="practice">
+  <div style="text-align:center;margin-bottom:3.5rem">
+    <div class="section-tag reveal" style="justify-content:center">Practice Areas</div>
+    <h2 class="reveal" style="max-width:100%;text-align:center">Specialised expertise across <em>key domains.</em></h2>
+  </div>
+  <div class="practice-grid reveal">
+    <div class="practice-card">
+      <div class="practice-num">01</div>
+      <div class="practice-title">Statutory Audit & Assurance</div>
+      <p class="practice-desc">Independent audit of financial statements in compliance with Companies Act 2013 and applicable accounting standards.</p>
+    </div>
+    <div class="practice-card">
+      <div class="practice-num">02</div>
+      <div class="practice-title">Direct & Indirect Taxation</div>
+      <p class="practice-desc">Comprehensive tax compliance, planning, and representation before Income Tax and GST authorities.</p>
+    </div>
+    <div class="practice-card">
+      <div class="practice-num">03</div>
+      <div class="practice-title">Corporate & ROC Compliance</div>
+      <p class="practice-desc">End-to-end company law advisory including incorporation, annual filings, and secretarial compliance.</p>
+    </div>
+    <div class="practice-card">
+      <div class="practice-num">04</div>
+      <div class="practice-title">FEMA & Cross-Border</div>
+      <p class="practice-desc">Foreign exchange management, FDI compliance, and RBI reporting for businesses with international transactions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ICAI COMPLIANCE NOTE -->
+<div id="compliance">
+  <div class="compliance-inner reveal">
+    <div class="compliance-icon">⚖️</div>
+    <div class="compliance-title">Professional Standards</div>
+    <p class="compliance-text">This firm adheres to the Code of Ethics prescribed by the Institute of Chartered Accountants of India (ICAI). All services are rendered in accordance with applicable professional standards. This website is published purely for informational purposes and does not constitute solicitation of professional work.</p>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-left">
+    <div class="section-tag reveal">Contact Us</div>
+    <h2 class="reveal">Begin your <em>enquiry.</em></h2>
+    <p class="section-lead reveal">Reach out to discuss your audit, tax, or advisory requirements. We will respond within one working day.</p>
+
+    <div class="contact-details reveal">
+      <div class="contact-detail">
+        <div class="contact-detail-icon">📍</div>
+        <div>
+          <div class="contact-detail-label">Office Address</div>
+          <div class="contact-detail-val">Hyderabad, Telangana, India</div>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">✉️</div>
+        <div>
+          <div class="contact-detail-label">Email</div>
+          <div class="contact-detail-val">abhishek@caabhishekbajaj.com</div>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">📞</div>
+        <div>
+          <div class="contact-detail-label">Phone</div>
+          <div class="contact-detail-val">+91 74118 77178</div>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">🕐</div>
+        <div>
+          <div class="contact-detail-label">Office Hours</div>
+          <div class="contact-detail-val">Mon – Sat, 10:00 AM – 6:00 PM IST</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-form-card reveal">
+    <div class="form-title">Send an Enquiry</div>
+    <div class="form-sub">All enquiries are acknowledged within 1 working day</div>
+    <iframe
+      data-tally-src="https://tally.so/embed/xXRJNG?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+      loading="lazy"
+      width="100%"
+      height="400"
+      frameborder="0"
+      marginheight="0"
+      marginwidth="0"
+      title="Send an Enquiry"
+      style="border:none;min-height:400px;"
+    ></iframe>
+    <script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}</script>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand-name">Abhishek Bajaj & Co.</div>
+      <div class="footer-brand-tag">Chartered Accountants · Hyderabad</div>
+      <p class="footer-brand-desc">A Hyderabad-based CA firm registered with the Institute of Chartered Accountants of India, providing audit, tax, and advisory services with professional diligence.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Services</div>
+      <ul class="footer-links">
+        <li><a href="#services">Audit & Assurance</a></li>
+        <li><a href="#services">Direct Taxation</a></li>
+        <li><a href="#services">GST Compliance</a></li>
+        <li><a href="#services">Company Law</a></li>
+        <li><a href="#services">FEMA & RBI</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Quick Links</div>
+      <ul class="footer-links">
+        <li><a href="#about">About the Firm</a></li>
+        <li><a href="#practice">Practice Areas</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="https://www.icai.org" target="_blank" rel="noopener">ICAI Website</a></li>
+        <li><a href="https://www.mca.gov.in" target="_blank" rel="noopener">MCA Portal</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 Abhishek Bajaj & Co., Chartered Accountants. All rights reserved.</p>
+    <p class="footer-icai">Abhishek Bajaj & Co. | Chartered Accountants | Hyderabad</p>
+  </div>
+</footer>
+
+<!-- ICAI DISCLAIMER -->
+<div class="disclaimer">
+  This website has been published in accordance with the guidelines of the Institute of Chartered Accountants of India (ICAI) and is meant solely for informational purposes. It does not constitute an advertisement, solicitation, or invitation to engage professional services. The information contained herein does not constitute legal or professional advice. Professional engagements are governed by applicable laws and the ICAI Code of Ethics. Abhishek Bajaj & Co. is a registered firm under the Institute of Chartered Accountants of India.
+</div>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Counter
+  function animateCounter(el) {
+    const target = parseInt(el.getAttribute('data-target'));
+    const suffix = el.innerHTML.replace(/^\d+/, '');
+    let val = 0;
+    const step = Math.ceil(target / 40);
+    const t = setInterval(() => {
+      val = Math.min(val + step, target);
+      el.innerHTML = val + suffix;
+      if (val >= target) clearInterval(t);
+    }, 30);
+  }
+
+  const cObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { animateCounter(e.target); cObs.unobserve(e.target); }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.stat-num[data-target]').forEach(el => cObs.observe(el));
+</script>
+</body>
+</html>
