@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Live Markets Dashboard | Abhishek Bajaj & Co. | Chartered Accountants</title>
+<meta name="description" content="Real-time markets dashboard — Indian indices, US indices, cryptocurrency and forex. Live data by Abhishek Bajaj & Co., Chartered Accountants, Hyderabad.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:       #0c1a35;
+    --navy-mid:   #132244;
+    --navy-light: #1c3060;
+    --gold:       #b8952a;
+    --gold-light: #d4af50;
+    --gold-pale:  #f5ecd4;
+    --gold-xpale: #fdf8ef;
+    --cream:      #faf8f3;
+    --white:      #ffffff;
+    --ink:        #0c1a35;
+    --body:       #3d4f6e;
+    --muted:      #7a8ba8;
+    --border:     #e8e2d5;
+    --border-gold: rgba(184,149,42,0.2);
+    --up:         #1a7f52;
+    --up-bg:      rgba(26,127,82,0.08);
+    --down:       #c0392b;
+    --down-bg:    rgba(192,57,43,0.08);
+    --shadow-sm:  0 2px 8px rgba(12,26,53,0.07);
+    --shadow-md:  0 8px 32px rgba(12,26,53,0.10);
+    --shadow-lg:  0 20px 60px rgba(12,26,53,0.14);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── COMPLIANCE BANNER ── */
+  .icai-banner {
+    background: var(--navy);
+    color: rgba(255,255,255,0.55);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    padding: 0.5rem 5vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .icai-banner strong { color: rgba(255,255,255,0.8); }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1rem 5vw;
+    background: rgba(250,248,243,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { text-decoration: none; }
+  .nav-logo-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-weight: 700; color: var(--navy);
+    letter-spacing: 0.01em; line-height: 1.1;
+  }
+  .nav-logo-tag {
+    font-size: 0.66rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold); font-weight: 500;
+  }
+  .nav-links { list-style: none; display: flex; align-items: center; gap: 2rem; }
+  .nav-links a {
+    text-decoration: none; color: var(--body); font-size: 0.9rem;
+    font-weight: 500; letter-spacing: 0.02em; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--navy); }
+  .nav-cta {
+    background: var(--navy); color: var(--white) !important;
+    padding: 0.55rem 1.3rem; border-radius: 2px; font-size: 0.82rem !important;
+    letter-spacing: 0.08em; text-transform: uppercase; transition: all 0.25s;
+  }
+  .nav-cta:hover { background: var(--gold); }
+
+  /* ── HEADER ── */
+  .mkt-header {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+    color: var(--white); padding: 2.6rem 5vw 2.2rem;
+    position: relative; overflow: hidden;
+  }
+  .mkt-header::after {
+    content: ""; position: absolute; right: -60px; top: -60px;
+    width: 320px; height: 320px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(212,175,80,0.16), transparent 70%);
+  }
+  .mkt-eyebrow {
+    font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--gold-light); font-weight: 500; margin-bottom: 0.6rem;
+  }
+  .mkt-header h1 {
+    font-family: 'Cormorant Garamond', serif; font-weight: 600;
+    font-size: clamp(2rem, 5vw, 3.1rem); line-height: 1.05; margin-bottom: 0.5rem;
+  }
+  .mkt-header h1 em { color: var(--gold-light); font-style: italic; }
+  .mkt-header p { color: rgba(255,255,255,0.7); max-width: 640px; font-size: 0.98rem; }
+
+  .status-row {
+    display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+    margin-top: 1.5rem; position: relative; z-index: 2;
+  }
+  .refresh-info { display: flex; align-items: center; gap: 0.55rem; font-size: 0.82rem; color: rgba(255,255,255,0.75); }
+  .live-dot {
+    width: 9px; height: 9px; border-radius: 50%; background: var(--gold-light);
+    box-shadow: 0 0 0 0 rgba(212,175,80,0.7); animation: pulse 2s infinite;
+  }
+  .live-dot.paused { background: var(--muted); animation: none; box-shadow: none; }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(212,175,80,0.6); }
+    70% { box-shadow: 0 0 0 9px rgba(212,175,80,0); }
+    100% { box-shadow: 0 0 0 0 rgba(212,175,80,0); }
+  }
+  .btn-mkt {
+    background: transparent; color: var(--white); border: 1px solid rgba(255,255,255,0.35);
+    padding: 0.5rem 1.1rem; border-radius: 2px; font-family: 'Jost',sans-serif;
+    font-size: 0.8rem; letter-spacing: 0.06em; cursor: pointer; transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .btn-mkt:hover { background: var(--gold); border-color: var(--gold); }
+  .btn-mkt.active { background: var(--gold); border-color: var(--gold); }
+
+  /* ── TICKER STRIP ── */
+  .ticker-wrap {
+    background: var(--navy-mid); border-top: 1px solid rgba(212,175,80,0.2);
+    border-bottom: 1px solid rgba(212,175,80,0.2); overflow: hidden; position: relative;
+  }
+  .ticker {
+    display: inline-flex; gap: 2.4rem; padding: 0.7rem 0; white-space: nowrap;
+    animation: scroll 60s linear infinite; will-change: transform;
+  }
+  .ticker-wrap:hover .ticker { animation-play-state: paused; }
+  @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .tick { display: inline-flex; align-items: baseline; gap: 0.5rem; font-size: 0.84rem; }
+  .tick-name { color: rgba(255,255,255,0.85); font-weight: 500; letter-spacing: 0.04em; }
+  .tick-val { color: #fff; font-variant-numeric: tabular-nums; }
+  .tick-chg { font-size: 0.78rem; font-variant-numeric: tabular-nums; }
+  .tick-chg.up { color: #58d18f; } .tick-chg.down { color: #ff7a6b; }
+
+  /* ── EXCHANGE STATUS ── */
+  .exch-status {
+    display: flex; gap: 0.6rem; flex-wrap: wrap; padding: 1.2rem 5vw 0.4rem;
+    max-width: 1240px; margin: 0 auto;
+  }
+  .exch-pill {
+    display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.78rem;
+    background: var(--white); border: 1px solid var(--border); border-radius: 20px;
+    padding: 0.4rem 0.9rem; color: var(--body); box-shadow: var(--shadow-sm);
+  }
+  .exch-pill b { color: var(--navy); font-weight: 600; }
+  .st-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .st-open { background: var(--up); box-shadow: 0 0 0 3px var(--up-bg); }
+  .st-closed { background: var(--muted); }
+
+  /* ── TABS ── */
+  .tabs {
+    display: flex; gap: 0.4rem; flex-wrap: wrap; padding: 1.4rem 5vw 0.4rem;
+    max-width: 1240px; margin: 0 auto;
+  }
+  .tab {
+    background: transparent; border: 1px solid var(--border); color: var(--body);
+    padding: 0.5rem 1.2rem; border-radius: 2px; font-family: 'Jost', sans-serif;
+    font-size: 0.86rem; letter-spacing: 0.04em; cursor: pointer; transition: all 0.2s;
+  }
+  .tab:hover { border-color: var(--gold); color: var(--navy); }
+  .tab.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
+
+  /* ── SECTIONS ── */
+  .mkt-main { max-width: 1240px; margin: 0 auto; padding: 1rem 5vw 4rem; }
+  .mkt-section { margin-top: 2.4rem; }
+  .mkt-section.hidden { display: none; }
+  .section-head { display: flex; align-items: center; gap: 0.9rem; margin-bottom: 1.1rem; }
+  .section-head h2 {
+    font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 1.7rem;
+    color: var(--navy); white-space: nowrap;
+  }
+  .section-head .line { flex: 1; height: 1px; background: var(--border-gold); }
+  .section-head .badge {
+    font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gold); border: 1px solid var(--border-gold); padding: 0.2rem 0.6rem;
+    border-radius: 2px; white-space: nowrap;
+  }
+
+  .card-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(255px, 1fr)); gap: 1rem;
+  }
+  .card {
+    background: var(--white); border: 1px solid var(--border); border-radius: 6px;
+    padding: 1.2rem 1.3rem; box-shadow: var(--shadow-sm); position: relative;
+    overflow: hidden; transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .card::before {
+    content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+    background: var(--gold); opacity: 0; transition: opacity 0.2s;
+  }
+  .card:hover::before { opacity: 1; }
+  .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; }
+  .card-name { font-weight: 600; font-size: 1rem; color: var(--navy); line-height: 1.2; }
+  .card-sym { font-size: 0.72rem; letter-spacing: 0.08em; color: var(--muted); text-transform: uppercase; margin-top: 0.15rem; }
+  .card-icon {
+    width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+    display: grid; place-items: center; font-weight: 700; font-size: 0.72rem;
+    background: var(--gold-xpale); color: var(--gold); border: 1px solid var(--border-gold);
+  }
+  .card-price {
+    font-size: 1.55rem; font-weight: 500; color: var(--ink); margin-top: 0.7rem;
+    font-variant-numeric: tabular-nums; letter-spacing: -0.01em;
+  }
+  .card-sub { font-size: 0.74rem; color: var(--muted); margin-top: 0.1rem; font-variant-numeric: tabular-nums; }
+  .card-chg {
+    display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 0.55rem;
+    font-size: 0.86rem; font-weight: 500; padding: 0.22rem 0.6rem; border-radius: 3px;
+    font-variant-numeric: tabular-nums;
+  }
+  .card-chg.up { color: var(--up); background: var(--up-bg); }
+  .card-chg.down { color: var(--down); background: var(--down-bg); }
+  .card-chg.flat { color: var(--muted); background: rgba(122,139,168,0.08); }
+  .spark { margin-top: 0.9rem; height: 40px; width: 100%; }
+  .card.loading .card-price, .card.loading .card-chg { color: transparent; }
+  .skel {
+    background: linear-gradient(90deg, #eee 25%, #f6f2e8 37%, #eee 63%);
+    background-size: 400% 100%; animation: shimmer 1.4s ease infinite; border-radius: 3px;
+  }
+  @keyframes shimmer { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
+  .card-err { font-size: 0.78rem; color: var(--down); margin-top: 0.6rem; }
+  .flash-up { animation: flashUp 0.9s ease; }
+  .flash-down { animation: flashDown 0.9s ease; }
+  @keyframes flashUp { 0% { background: var(--up-bg); } 100% { background: var(--white); } }
+  @keyframes flashDown { 0% { background: var(--down-bg); } 100% { background: var(--white); } }
+
+  /* ── DISCLAIMER / FOOTER ── */
+  .disclaimer {
+    max-width: 1240px; margin: 0 auto; padding: 0 5vw;
+  }
+  .disclaimer-inner {
+    background: var(--gold-xpale); border: 1px solid var(--border-gold);
+    border-radius: 6px; padding: 1.3rem 1.6rem; font-size: 0.82rem; color: var(--body);
+    line-height: 1.7;
+  }
+  .disclaimer-inner b { color: var(--navy); }
+  footer {
+    background: var(--navy); color: rgba(255,255,255,0.6); margin-top: 3rem;
+    padding: 2.4rem 5vw; text-align: center; font-size: 0.82rem;
+  }
+  footer .src { color: var(--gold-light); text-decoration: none; }
+  footer .src:hover { text-decoration: underline; }
+  footer .fbrand { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: #fff; margin-bottom: 0.4rem; }
+
+  @media (max-width: 760px) {
+    .nav-links li:not(:last-child) { display: none; }
+    .card-grid { grid-template-columns: 1fr 1fr; }
+    .card-price { font-size: 1.3rem; }
+  }
+  @media (max-width: 480px) {
+    .card-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COMPLIANCE BANNER -->
+<div class="icai-banner">
+  <span><strong>Abhishek Bajaj &amp; Co.</strong> | Chartered Accountants | Hyderabad, Telangana</span>
+  <span>Market data for informational use only</span>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-name">Abhishek Bajaj &amp; Co.</div>
+    <div class="nav-logo-tag">Chartered Accountants</div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#practice">Practice Areas</a></li>
+    <li><a href="index.html" class="nav-cta">Back to Site</a></li>
+  </ul>
+</nav>
+
+<!-- HEADER -->
+<header class="mkt-header">
+  <div class="mkt-eyebrow">Real-Time Market Data</div>
+  <h1>Live <em>Markets</em> Dashboard</h1>
+  <p>Indian &amp; US indices, cryptocurrency and foreign exchange — refreshed live from public market data sources.</p>
+  <div class="status-row">
+    <span class="refresh-info"><span class="live-dot" id="liveDot"></span><span id="lastUpdated">Loading live data…</span></span>
+    <button class="btn-mkt" id="refreshBtn" title="Refresh now">↻ Refresh</button>
+    <button class="btn-mkt active" id="autoBtn" title="Toggle auto-refresh">Auto-refresh: ON</button>
+  </div>
+</header>
+
+<!-- TICKER -->
+<div class="ticker-wrap"><div class="ticker" id="ticker"></div></div>
+
+<!-- EXCHANGE STATUS -->
+<div class="exch-status" id="exchStatus"></div>
+
+<!-- TABS -->
+<div class="tabs" id="tabs">
+  <button class="tab active" data-tab="all">All Markets</button>
+  <button class="tab" data-tab="indian">🇮🇳 Indian</button>
+  <button class="tab" data-tab="us">🇺🇸 US</button>
+  <button class="tab" data-tab="crypto">₿ Crypto</button>
+  <button class="tab" data-tab="forex">💱 Forex</button>
+</div>
+
+<!-- MAIN -->
+<main class="mkt-main">
+  <section class="mkt-section" data-group="indian">
+    <div class="section-head"><h2>Indian Indices</h2><span class="badge">NSE · BSE</span><span class="line"></span></div>
+    <div class="card-grid" id="grid-indian"></div>
+  </section>
+
+  <section class="mkt-section" data-group="us">
+    <div class="section-head"><h2>US Indices</h2><span class="badge">NYSE · Nasdaq</span><span class="line"></span></div>
+    <div class="card-grid" id="grid-us"></div>
+  </section>
+
+  <section class="mkt-section" data-group="crypto">
+    <div class="section-head"><h2>Cryptocurrency</h2><span class="badge">24 / 7 · USD</span><span class="line"></span></div>
+    <div class="card-grid" id="grid-crypto"></div>
+  </section>
+
+  <section class="mkt-section" data-group="forex">
+    <div class="section-head"><h2>Foreign Exchange</h2><span class="badge">Spot Rates</span><span class="line"></span></div>
+    <div class="card-grid" id="grid-forex"></div>
+  </section>
+</main>
+
+<!-- DISCLAIMER -->
+<div class="disclaimer">
+  <div class="disclaimer-inner">
+    <b>Disclaimer:</b> This dashboard is provided by Abhishek Bajaj &amp; Co. for general information only. Prices are sourced from free public market-data APIs and may be delayed by 15 minutes or more. Figures are not guaranteed to be accurate, complete or timely, and nothing here constitutes investment, tax or financial advice or a solicitation to buy or sell any security. Please verify all data with your broker or an authorised source before acting. Past performance is not indicative of future results.
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fbrand">Abhishek Bajaj &amp; Co.</div>
+  <div>Chartered Accountants · Hyderabad, Telangana</div>
+  <p style="margin-top:0.8rem">Data sources:
+    <a class="src" href="https://www.coingecko.com" target="_blank" rel="noopener">CoinGecko</a> (crypto) ·
+    <a class="src" href="https://finance.yahoo.com" target="_blank" rel="noopener">Yahoo Finance</a> (indices &amp; forex).
+  </p>
+  <p style="margin-top:0.5rem;font-size:0.74rem;opacity:0.7">© 2025 Abhishek Bajaj &amp; Co. All rights reserved. Data provided “as is” without warranty.</p>
+</footer>
+
+<script>
+/* ============================================================
+   LIVE MARKETS DASHBOARD  —  Abhishek Bajaj & Co.
+   Crypto  : CoinGecko  (direct, CORS-enabled)
+   Indices : Yahoo Finance chart endpoint via CORS-proxy chain
+   Forex   : Yahoo Finance FX pairs via same proxy chain
+   ============================================================ */
+
+/* ---------- Instrument definitions ---------- */
+const INDIAN = [
+  { sym: '^NSEI',    name: 'Nifty 50',   icon: 'N50' },
+  { sym: '^BSESN',   name: 'Sensex',     icon: 'BSE' },
+  { sym: '^NSEBANK', name: 'Bank Nifty', icon: 'BNK' },
+  { sym: '^CNXIT',   name: 'Nifty IT',   icon: 'IT'  },
+];
+const US = [
+  { sym: '^GSPC', name: 'S&P 500',       icon: 'SPX' },
+  { sym: '^DJI',  name: 'Dow Jones',     icon: 'DJI' },
+  { sym: '^IXIC', name: 'Nasdaq Comp.',  icon: 'IXC' },
+  { sym: '^RUT',  name: 'Russell 2000',  icon: 'RUT' },
+  { sym: '^VIX',  name: 'Volatility (VIX)', icon: 'VIX' },
+];
+const FOREX = [
+  { sym: 'USDINR=X', name: 'USD / INR', icon: '$₹', dp: 3 },
+  { sym: 'EURINR=X', name: 'EUR / INR', icon: '€₹', dp: 3 },
+  { sym: 'GBPINR=X', name: 'GBP / INR', icon: '£₹', dp: 3 },
+  { sym: 'JPYINR=X', name: 'JPY / INR', icon: '¥₹', dp: 4 },
+  { sym: 'EURUSD=X', name: 'EUR / USD', icon: '€$', dp: 4 },
+  { sym: 'GBPUSD=X', name: 'GBP / USD', icon: '£$', dp: 4 },
+  { sym: 'DX-Y.NYB', name: 'Dollar Index', icon: 'DXY', dp: 2 },
+];
+const CRYPTO_IDS = ['bitcoin','ethereum','solana','binancecoin','ripple','cardano','dogecoin','tron'];
+const CRYPTO_META = {
+  bitcoin:{name:'Bitcoin',icon:'₿'}, ethereum:{name:'Ethereum',icon:'Ξ'},
+  solana:{name:'Solana',icon:'SOL'}, binancecoin:{name:'BNB',icon:'BNB'},
+  ripple:{name:'XRP',icon:'XRP'}, cardano:{name:'Cardano',icon:'ADA'},
+  dogecoin:{name:'Dogecoin',icon:'DOGE'}, tron:{name:'TRON',icon:'TRX'},
+};
+
+/* ---------- State ---------- */
+const store = {};          // key -> {price, prev, chgPct, spark, currency, dp}
+let autoRefresh = true;
+let refreshTimer = null;
+let usdInr = null;         // for INR conversion display on crypto
+
+/* ---------- Helpers ---------- */
+const $ = (id) => document.getElementById(id);
+
+function fmtNum(n, dp = 2) {
+  if (n == null || isNaN(n)) return '—';
+  return Number(n).toLocaleString('en-IN', { minimumFractionDigits: dp, maximumFractionDigits: dp });
+}
+function fmtBig(n) {
+  if (n == null || isNaN(n)) return '—';
+  if (n >= 1) return fmtNum(n, 2);
+  if (n >= 0.01) return fmtNum(n, 4);
+  return fmtNum(n, 6);
+}
+
+/* Build an SVG sparkline path from an array of numbers */
+function sparkline(values, up) {
+  const clean = (values || []).filter(v => typeof v === 'number' && !isNaN(v));
+  if (clean.length < 2) return '';
+  const w = 240, h = 40, pad = 3;
+  const min = Math.min(...clean), max = Math.max(...clean);
+  const range = (max - min) || 1;
+  const stepX = (w - pad * 2) / (clean.length - 1);
+  const pts = clean.map((v, i) => {
+    const x = pad + i * stepX;
+    const y = pad + (h - pad * 2) * (1 - (v - min) / range);
+    return [x, y];
+  });
+  const d = pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' ');
+  const area = d + ` L${pts[pts.length-1][0].toFixed(1)} ${h} L${pts[0][0].toFixed(1)} ${h} Z`;
+  const col = up ? 'var(--up)' : 'var(--down)';
+  const fill = up ? 'rgba(26,127,82,0.10)' : 'rgba(192,57,43,0.10)';
+  const gid = 'g' + Math.random().toString(36).slice(2, 8);
+  return `<svg class="spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+    <path d="${area}" fill="${fill}" stroke="none"/>
+    <path d="${d}" fill="none" stroke="${col}" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
+  </svg>`;
+}
+
+/* ---------- Networking: CORS proxy chain for Yahoo ---------- */
+const PROXIES = [
+  (u) => 'https://corsproxy.io/?url=' + encodeURIComponent(u),
+  (u) => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u),
+  (u) => 'https://thingproxy.freeboard.io/fetch/' + u,
+];
+
+async function fetchJson(url, { timeout = 12000 } = {}) {
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), timeout);
+  try {
+    const r = await fetch(url, { signal: ctrl.signal, headers: { 'Accept': 'application/json' } });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return await r.json();
+  } finally { clearTimeout(t); }
+}
+
+/* Try direct first, then each proxy, until one returns valid Yahoo JSON */
+async function fetchYahoo(symbol) {
+  const target = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?range=1d&interval=5m`;
+  const attempts = [target, ...PROXIES.map(p => p(target))];
+  let lastErr;
+  for (const u of attempts) {
+    try {
+      const j = await fetchJson(u);
+      const res = j?.chart?.result?.[0];
+      if (!res || !res.meta) throw new Error('bad shape');
+      const m = res.meta;
+      const price = m.regularMarketPrice;
+      const prev = m.chartPreviousClose ?? m.previousClose;
+      const closes = res.indicators?.quote?.[0]?.close || [];
+      if (price == null) throw new Error('no price');
+      return {
+        price,
+        prev,
+        chgPct: prev ? ((price - prev) / prev) * 100 : 0,
+        chgAbs: prev != null ? price - prev : 0,
+        spark: closes,
+      };
+    } catch (e) { lastErr = e; }
+  }
+  throw lastErr || new Error('unreachable');
+}
+
+/* ---------- Rendering ---------- */
+function skeletonCard(sym, name, icon, sub) {
+  return `<div class="card loading" id="card-${cssId(sym)}" data-sym="${sym}">
+    <div class="card-top">
+      <div><div class="card-name">${name}</div><div class="card-sym">${sym.replace('=X','').replace(/[\^]/,'')}</div></div>
+      <div class="card-icon">${icon}</div>
+    </div>
+    <div class="card-price skel" style="height:1.55rem;width:60%">&nbsp;</div>
+    <div class="card-sub">${sub || ''}</div>
+    <div class="card-chg skel" style="height:1rem;width:40%;margin-top:0.6rem">&nbsp;</div>
+    <div class="spark"></div>
+  </div>`;
+}
+function cssId(s){ return s.replace(/[^a-zA-Z0-9]/g,'_'); }
+
+function paintCard(sym, d, { prefix = '', suffix = '', dp = 2, sub = '' } = {}) {
+  const el = $('card-' + cssId(sym));
+  if (!el) return;
+  if (d.error) {
+    el.classList.remove('loading');
+    el.querySelector('.card-price').innerHTML = '<span style="font-size:1rem;color:var(--muted)">Unavailable</span>';
+    el.querySelector('.card-price').classList.remove('skel');
+    const chg = el.querySelector('.card-chg'); if (chg){ chg.className='card-chg flat'; chg.textContent='—'; }
+    let err = el.querySelector('.card-err');
+    if (!err){ err = document.createElement('div'); err.className='card-err'; el.appendChild(err); }
+    err.textContent = 'Live feed unavailable — retrying…';
+    return;
+  }
+  const prevPrice = store[sym]?.price;
+  store[sym] = d;
+  const up = d.chgPct > 0.0001, down = d.chgPct < -0.0001;
+  el.classList.remove('loading');
+
+  const priceEl = el.querySelector('.card-price');
+  priceEl.classList.remove('skel');
+  priceEl.textContent = prefix + fmtNum(d.price, dp) + suffix;
+
+  if (sub) el.querySelector('.card-sub').textContent = sub;
+
+  const chg = el.querySelector('.card-chg');
+  chg.classList.remove('skel');
+  chg.className = 'card-chg ' + (up ? 'up' : down ? 'down' : 'flat');
+  const arrow = up ? '▲' : down ? '▼' : '■';
+  const absTxt = d.chgAbs != null ? fmtNum(Math.abs(d.chgAbs), dp) : '';
+  chg.innerHTML = `${arrow} ${absTxt ? absTxt + '  ' : ''}(${d.chgPct >= 0 ? '+' : ''}${d.chgPct.toFixed(2)}%)`;
+
+  // sparkline
+  let sp = el.querySelector('.spark');
+  const svg = sparkline(d.spark, !down);
+  if (svg){ const tmp = document.createElement('div'); tmp.innerHTML = svg; sp.replaceWith(tmp.firstElementChild); }
+
+  // flash on change
+  if (prevPrice != null && prevPrice !== d.price) {
+    el.classList.remove('flash-up','flash-down');
+    void el.offsetWidth;
+    el.classList.add(d.price > prevPrice ? 'flash-up' : 'flash-down');
+  }
+}
+
+/* ---------- Data loaders ---------- */
+async function loadYahooGroup(list, gridId, opts = {}) {
+  await Promise.all(list.map(async (it) => {
+    try {
+      const d = await fetchYahoo(it.sym);
+      paintCard(it.sym, d, { dp: it.dp ?? opts.dp ?? 2, prefix: opts.prefix || '', suffix: opts.suffix || '' });
+      if (it.sym === 'USDINR=X') usdInr = d.price;
+    } catch (e) {
+      paintCard(it.sym, { error: true });
+    }
+  }));
+}
+
+async function loadCrypto() {
+  const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${CRYPTO_IDS.join(',')}&order=market_cap_desc&sparkline=true&price_change_percentage=24h`;
+  try {
+    const arr = await fetchJson(url, { timeout: 12000 });
+    arr.forEach(c => {
+      const key = 'crypto-' + c.id;
+      const chgPct = c.price_change_percentage_24h ?? 0;
+      const spark = c.sparkline_in_7d?.price || [];
+      const inrTxt = usdInr ? '≈ ₹' + fmtNum(c.current_price * usdInr, c.current_price < 1 ? 2 : 0) : ('MCap $' + shortNum(c.market_cap));
+      paintCard(key, {
+        price: c.current_price,
+        chgPct,
+        chgAbs: c.price_change_24h,
+        spark,
+      }, { prefix: '$', dp: c.current_price >= 1 ? 2 : 6, sub: inrTxt });
+    });
+  } catch (e) {
+    CRYPTO_IDS.forEach(id => paintCard('crypto-' + id, { error: true }));
+  }
+}
+function shortNum(n){
+  if (n == null) return '—';
+  if (n >= 1e12) return (n/1e12).toFixed(2)+'T';
+  if (n >= 1e9)  return (n/1e9).toFixed(2)+'B';
+  if (n >= 1e6)  return (n/1e6).toFixed(2)+'M';
+  return fmtNum(n,0);
+}
+
+/* ---------- Ticker & status ---------- */
+function buildTicker() {
+  const items = [];
+  const push = (name, sym, dp = 2, pre = '') => {
+    const d = store[sym];
+    if (!d) return;
+    const cls = d.chgPct > 0 ? 'up' : d.chgPct < 0 ? 'down' : '';
+    const ar = d.chgPct > 0 ? '▲' : d.chgPct < 0 ? '▼' : '';
+    items.push(`<span class="tick"><span class="tick-name">${name}</span><span class="tick-val">${pre}${fmtNum(d.price, dp)}</span><span class="tick-chg ${cls}">${ar} ${d.chgPct>=0?'+':''}${d.chgPct.toFixed(2)}%</span></span>`);
+  };
+  push('NIFTY 50','^NSEI'); push('SENSEX','^BSESN'); push('BANK NIFTY','^NSEBANK');
+  push('S&P 500','^GSPC'); push('DOW','^DJI'); push('NASDAQ','^IXIC');
+  push('BTC','crypto-bitcoin',0,'$'); push('ETH','crypto-ethereum',0,'$'); push('SOL','crypto-solana',2,'$');
+  push('USD/INR','USDINR=X',3); push('EUR/USD','EURUSD=X',4); push('DXY','DX-Y.NYB',2);
+  if (!items.length){ $('ticker').innerHTML=''; return; }
+  const seq = items.join('');
+  $('ticker').innerHTML = seq + seq; // duplicate for seamless loop
+}
+
+function exchangeStatus() {
+  // Determine open/closed using current UTC time
+  const now = new Date();
+  const utcH = now.getUTCHours(), utcM = now.getUTCMinutes();
+  const utcMin = utcH * 60 + utcM;
+  const day = now.getUTCDay(); // 0 Sun .. 6 Sat
+  const weekday = day >= 1 && day <= 5;
+
+  // NSE/BSE: 09:15–15:30 IST = 03:45–10:00 UTC
+  const nseOpen = weekday && utcMin >= (3*60+45) && utcMin < (10*60);
+  // US markets: 09:30–16:00 ET. ET is UTC-5 (std) / UTC-4 (DST). Approx with UTC-4 (Apr–Oct) else UTC-5.
+  const month = now.getUTCMonth(); // 0-11
+  const isDST = month >= 2 && month <= 10; // rough Mar–Nov
+  const etOffset = isDST ? 4 : 5;
+  const openUTC = (9*60+30) + etOffset*60;
+  const closeUTC = (16*60) + etOffset*60;
+  const usOpen = weekday && utcMin >= (openUTC % 1440) && utcMin < (closeUTC % 1440);
+
+  const pill = (name, open, note) => `<span class="exch-pill"><span class="st-dot ${open?'st-open':'st-closed'}"></span><b>${name}</b> ${open ? 'Open' : 'Closed'}${note?` · ${note}`:''}</span>`;
+  $('exchStatus').innerHTML =
+    pill('NSE / BSE', nseOpen, 'IST 09:15–15:30') +
+    pill('US Markets', usOpen, 'ET 09:30–16:00') +
+    `<span class="exch-pill"><span class="st-dot st-open"></span><b>Crypto</b> 24 / 7</span>` +
+    `<span class="exch-pill"><span class="st-dot ${weekday?'st-open':'st-closed'}"></span><b>Forex</b> ${weekday?'Open':'Weekend'}</span>`;
+}
+
+/* ---------- Orchestration ---------- */
+async function refreshAll() {
+  $('liveDot').classList.remove('paused');
+  $('lastUpdated').textContent = 'Updating…';
+  exchangeStatus();
+
+  // Forex first (so USD/INR is available for crypto INR conversion), then others in parallel
+  await loadYahooGroup(FOREX, 'grid-forex');
+  await Promise.all([
+    loadYahooGroup(INDIAN, 'grid-indian'),
+    loadYahooGroup(US, 'grid-us'),
+    loadCrypto(),
+  ]);
+
+  buildTicker();
+  const t = new Date();
+  $('lastUpdated').textContent = 'Last updated ' + t.toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit', second:'2-digit' }) + ' IST';
+  if (!autoRefresh) $('liveDot').classList.add('paused');
+}
+
+/* ---------- Init ---------- */
+function buildSkeletons() {
+  $('grid-indian').innerHTML = INDIAN.map(i => skeletonCard(i.sym, i.name, i.icon)).join('');
+  $('grid-us').innerHTML     = US.map(i => skeletonCard(i.sym, i.name, i.icon)).join('');
+  $('grid-forex').innerHTML  = FOREX.map(i => skeletonCard(i.sym, i.name, i.icon)).join('');
+  $('grid-crypto').innerHTML = CRYPTO_IDS.map(id => {
+    const m = CRYPTO_META[id];
+    return skeletonCard('crypto-' + id, m.name, m.icon, 'Loading…');
+  }).join('');
+}
+
+function setupTabs() {
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const which = tab.dataset.tab;
+      document.querySelectorAll('.mkt-section').forEach(sec => {
+        sec.classList.toggle('hidden', which !== 'all' && sec.dataset.group !== which);
+      });
+    });
+  });
+}
+
+function setupControls() {
+  $('refreshBtn').addEventListener('click', () => refreshAll());
+  $('autoBtn').addEventListener('click', () => {
+    autoRefresh = !autoRefresh;
+    $('autoBtn').textContent = 'Auto-refresh: ' + (autoRefresh ? 'ON' : 'OFF');
+    $('autoBtn').classList.toggle('active', autoRefresh);
+    $('liveDot').classList.toggle('paused', !autoRefresh);
+    scheduleNext();
+  });
+}
+
+function scheduleNext() {
+  if (refreshTimer) clearInterval(refreshTimer);
+  if (autoRefresh) refreshTimer = setInterval(() => { if (autoRefresh) refreshAll(); }, 60000);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  buildSkeletons();
+  setupTabs();
+  setupControls();
+  exchangeStatus();
+  refreshAll();
+  scheduleNext();
+  setInterval(exchangeStatus, 60000);
+});
+</script>
+</body>
+</html>
