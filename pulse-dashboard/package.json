@@ -1,0 +1,9 @@
+{
+  "name": "pulse-markets-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "description": "PULSE — a live markets terminal (Indian & US indices, crypto, forex) with serverless data proxies, deployable on Vercel.",
+  "engines": {
+    "node": ">=18"
+  }
+}

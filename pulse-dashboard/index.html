@@ -44,7 +44,6 @@
   }
   .mono { font-family: 'JetBrains Mono', monospace; font-variant-numeric: tabular-nums; }
 
-  /* ── TOP BAR ── */
   header {
     position: sticky; top: 0; z-index: 50;
     display: flex; align-items: center; justify-content: space-between; gap: 1rem;
@@ -80,7 +79,6 @@
   .btn:hover { border-color: var(--accent); color: var(--txt); }
   .btn.on { border-color: var(--up); color: var(--up); background: var(--up-bg); }
 
-  /* ── TICKER ── */
   .ticker-wrap { overflow: hidden; border-bottom: 1px solid var(--line); background: var(--bg-2); }
   .ticker { display: inline-flex; gap: 2.2rem; padding: 0.55rem 0; white-space: nowrap; animation: scroll 70s linear infinite; }
   .ticker-wrap:hover .ticker { animation-play-state: paused; }
@@ -89,7 +87,6 @@
   .tk-name { color: var(--txt-2); font-weight: 500; letter-spacing: 0.05em; }
   .tk-val { color: var(--txt); } .tk-chg.up { color: var(--up); } .tk-chg.down { color: var(--down); }
 
-  /* ── HERO / STATUS STRIP ── */
   .strip { max-width: 1320px; margin: 0 auto; padding: 1.4rem 4vw 0; }
   .strip h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.5rem, 3.5vw, 2.2rem); font-weight: 700; letter-spacing: -0.01em; }
   .strip h1 em { font-style: normal; background: linear-gradient(120deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -101,13 +98,11 @@
   .s-open { background: var(--up); box-shadow: 0 0 0 3px var(--up-bg); }
   .s-closed { background: var(--muted); }
 
-  /* ── TABS ── */
   .tabs { max-width: 1320px; margin: 0 auto; padding: 1.3rem 4vw 0; display: flex; gap: 0.4rem; flex-wrap: wrap; }
   .tab { font-size: 0.84rem; color: var(--txt-2); background: transparent; border: 1px solid var(--line); border-radius: 8px; padding: 0.5rem 1rem; cursor: pointer; transition: all 0.18s; }
   .tab:hover { border-color: var(--accent); color: var(--txt); }
   .tab.active { background: linear-gradient(120deg, var(--accent), var(--accent-2)); border-color: transparent; color: #fff; font-weight: 600; }
 
-  /* ── SECTIONS ── */
   main { max-width: 1320px; margin: 0 auto; padding: 0.6rem 4vw 4rem; }
   .sec { margin-top: 2rem; }
   .sec.hidden { display: none; }
@@ -139,7 +134,6 @@
   @keyframes fU { 0%{background:var(--up-soft)} 100%{background:transparent} }
   @keyframes fD { 0%{background:var(--down-soft)} 100%{background:transparent} }
 
-  /* ── FOOTER ── */
   footer { max-width: 1320px; margin: 0 auto; padding: 0 4vw 3rem; }
   .note { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 1.1rem 1.3rem; font-size: 0.8rem; color: var(--txt-2); line-height: 1.65; }
   .note b { color: var(--txt); }
@@ -175,7 +169,7 @@
 
 <div class="strip">
   <h1>All markets, <em>one pulse</em>.</h1>
-  <p>Real-time Indian &amp; US indices, crypto and forex — refreshed live from public market feeds.</p>
+  <p>Real-time Indian &amp; US indices, crypto and forex — served live through our own backend.</p>
   <div class="exch" id="exch"></div>
 </div>
 
@@ -208,7 +202,7 @@
 
 <footer>
   <div class="note">
-    <b>About the data.</b> Crypto is sourced live from <a href="https://www.coingecko.com" target="_blank" rel="noopener">CoinGecko</a>; indices and forex from <a href="https://finance.yahoo.com" target="_blank" rel="noopener">Yahoo Finance</a>. Prices are from free public feeds and may be delayed by 15+ minutes. This dashboard is for information only — not investment advice. Verify with an authorised source before trading.
+    <b>About the data.</b> Crypto is sourced from <a href="https://www.coingecko.com" target="_blank" rel="noopener">CoinGecko</a>; indices and forex from <a href="https://finance.yahoo.com" target="_blank" rel="noopener">Yahoo Finance</a> — both proxied through this site's own serverless backend and edge-cached. Prices are from free public feeds and may be delayed by 15+ minutes. For information only, not investment advice. Verify with an authorised source before trading.
   </div>
   <div class="credit">PULSE · Live Markets Terminal</div>
 </footer>
@@ -216,9 +210,10 @@
 <script>
 /* ============================================================
    PULSE — Live Markets Terminal
-   Crypto  : CoinGecko  (direct, CORS-enabled)
-   Indices : Yahoo Finance chart endpoint via CORS-proxy chain
-   Forex   : Yahoo Finance FX pairs via same proxy chain
+   Data is served through this site's own Vercel serverless
+   backend (/api/yahoo, /api/crypto), edge-cached for speed and
+   rate-limit safety. Public CORS proxies remain only as a
+   fallback for local (file://) preview without the backend.
    ============================================================ */
 
 const INDIAN = [
@@ -289,7 +284,7 @@ function sparkline(values, up) {
   </svg>`;
 }
 
-/* CORS proxy chain for Yahoo */
+/* Public CORS proxies — fallback only (used when /api backend is absent, e.g. file:// preview) */
 const PROXIES = [
   (u) => 'https://corsproxy.io/?url=' + encodeURIComponent(u),
   (u) => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u),
@@ -304,27 +299,30 @@ async function fetchJson(url, { timeout = 12000 } = {}) {
     return await r.json();
   } finally { clearTimeout(t); }
 }
+
+function parseYahoo(j) {
+  const res = j?.chart?.result?.[0];
+  if (!res || !res.meta) throw new Error('bad shape');
+  const m = res.meta;
+  const price = m.regularMarketPrice;
+  const prev = m.chartPreviousClose ?? m.previousClose;
+  const closes = res.indicators?.quote?.[0]?.close || [];
+  if (price == null) throw new Error('no price');
+  return { price, prev, chgPct: prev ? ((price - prev)/prev)*100 : 0, chgAbs: prev != null ? price - prev : 0, spark: closes };
+}
+
 async function fetchYahoo(symbol) {
+  const backend = `/api/yahoo?symbol=${encodeURIComponent(symbol)}`;
   const target = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?range=1d&interval=5m`;
-  const attempts = [target, ...PROXIES.map(p => p(target))];
+  const attempts = [backend, target, ...PROXIES.map(p => p(target))];
   let lastErr;
   for (const u of attempts) {
-    try {
-      const j = await fetchJson(u);
-      const res = j?.chart?.result?.[0];
-      if (!res || !res.meta) throw new Error('bad shape');
-      const m = res.meta;
-      const price = m.regularMarketPrice;
-      const prev = m.chartPreviousClose ?? m.previousClose;
-      const closes = res.indicators?.quote?.[0]?.close || [];
-      if (price == null) throw new Error('no price');
-      return { price, prev, chgPct: prev ? ((price - prev)/prev)*100 : 0, chgAbs: prev != null ? price - prev : 0, spark: closes };
-    } catch (e) { lastErr = e; }
+    try { return parseYahoo(await fetchJson(u)); }
+    catch (e) { lastErr = e; }
   }
   throw lastErr || new Error('unreachable');
 }
 
-/* Rendering */
 function skeletonCard(sym, name, icon, sub) {
   return `<div class="card" id="card-${cssId(sym)}" data-sym="${sym}">
     <div class="card-top">
@@ -389,16 +387,20 @@ async function loadYahooGroup(list) {
 }
 
 async function loadCrypto() {
-  const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${CRYPTO_IDS.join(',')}&order=market_cap_desc&sparkline=true&price_change_percentage=24h`;
-  try {
-    const arr = await fetchJson(url);
-    arr.forEach(c => {
-      const sub = usdInr ? '≈ ₹' + fmtNum(c.current_price * usdInr, c.current_price < 1 ? 2 : 0) : ('MCap $' + shortNum(c.market_cap));
-      paintCard('crypto-' + c.id, {
-        price: c.current_price, chgPct: c.price_change_percentage_24h ?? 0, chgAbs: c.price_change_24h, spark: c.sparkline_in_7d?.price || [],
-      }, { prefix: '$', dp: c.current_price >= 1 ? 2 : 6, sub });
-    });
-  } catch (e) { CRYPTO_IDS.forEach(id => paintCard('crypto-' + id, { error: true })); }
+  const direct = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${CRYPTO_IDS.join(',')}&order=market_cap_desc&sparkline=true&price_change_percentage=24h`;
+  let arr = null;
+  try { arr = await fetchJson('/api/crypto'); }
+  catch (e1) {
+    try { arr = await fetchJson(direct); }
+    catch (e2) { CRYPTO_IDS.forEach(id => paintCard('crypto-' + id, { error: true })); return; }
+  }
+  if (!Array.isArray(arr)) { CRYPTO_IDS.forEach(id => paintCard('crypto-' + id, { error: true })); return; }
+  arr.forEach(c => {
+    const sub = usdInr ? '≈ ₹' + fmtNum(c.current_price * usdInr, c.current_price < 1 ? 2 : 0) : ('MCap $' + shortNum(c.market_cap));
+    paintCard('crypto-' + c.id, {
+      price: c.current_price, chgPct: c.price_change_percentage_24h ?? 0, chgAbs: c.price_change_24h, spark: c.sparkline_in_7d?.price || [],
+    }, { prefix: '$', dp: c.current_price >= 1 ? 2 : 6, sub });
+  });
 }
 
 function buildTicker() {
@@ -423,8 +425,8 @@ function exchangeStatus() {
   const utcMin = now.getUTCHours()*60 + now.getUTCMinutes();
   const day = now.getUTCDay();
   const weekday = day >= 1 && day <= 5;
-  const nseOpen = weekday && utcMin >= (3*60+45) && utcMin < (10*60);          // 09:15–15:30 IST
-  const isDST = now.getUTCMonth() >= 2 && now.getUTCMonth() <= 10;             // rough Mar–Nov
+  const nseOpen = weekday && utcMin >= (3*60+45) && utcMin < (10*60);
+  const isDST = now.getUTCMonth() >= 2 && now.getUTCMonth() <= 10;
   const etOff = isDST ? 4 : 5;
   const usOpen = weekday && utcMin >= ((9*60+30)+etOff*60)%1440 && utcMin < ((16*60)+etOff*60)%1440;
   const pill = (name, open, note) => `<span class="exch-pill"><span class="sdot ${open?'s-open':'s-closed'}"></span><b>${name}</b> ${open?'Open':'Closed'}${note?` · ${note}`:''}</span>`;
