@@ -2,7 +2,7 @@ ABHISHEK BAJAJ & CO. — WEBSITE REDESIGN
 Prepared 16 October 2026
 
 STATUS
-Private review version. Existing domain has not been changed.
+Public launch approved by the owner on 16 October 2026.
 17 responsive pages; eight dedicated service pages. No customer data submitted during testing.
 
 RUN LOCALLY
@@ -34,7 +34,7 @@ PROPOSAL COVERAGE
 19. Deadline tracker: user enters a verified date and source; downloads an all-day calendar event with a one-day reminder. No statutory deadline feed, server scheduling or automatic notification service connected.
 20. Communication: existing Tally embed, email, click-to-call and WhatsApp links. Live calendar and gateway integrations remain to be connected.
 21. Responsive experience: tested in Chrome at 1440px and 390px widths; mobile overflow checked across all 17 pages.
-22. SEO foundation: unique titles/descriptions, heading structure, readable URLs, internal links, AccountingService JSON-LD, favicon and sitemap. Private draft deliberately has noindex,nofollow and robots disallow. Set canonical URLs, remove draft indexing blocks and verify sitemap before approved public launch.
+22. SEO foundation: unique titles/descriptions, heading structure, readable URLs, internal links, AccountingService JSON-LD, favicon and sitemap. Public pages have index,follow, canonical URLs and an allow-crawl robots file with the sitemap URL.
 23. Analytics / Search Console: not connected; requires account/property IDs and tracking/privacy decisions. No analytics data is fabricated.
 24. Performance / security: lightweight static pages, no application secrets or upload storage, field validation and encoded email/calendar output. Hosting supplies HTTPS. Production security headers, spam protections for final form provider, retention policy and backups need final hosting/provider configuration.
 25. Future modules: client login/dashboard, document management, status tracking, CRM, automated WhatsApp/email and onboarding are future integrations, not represented as working features.
