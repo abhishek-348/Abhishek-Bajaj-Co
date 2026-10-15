@@ -1,0 +1,65 @@
+ABHISHEK BAJAJ & CO. — WEBSITE REDESIGN
+Prepared 16 October 2026
+
+STATUS
+Public launch approved by the owner on 16 October 2026.
+17 responsive pages; eight dedicated service pages. No customer data submitted during testing.
+
+RUN LOCALLY
+From this repository root: python3 -m http.server 4173
+Then open http://localhost:4173
+The site is buildless HTML/CSS/JavaScript. There is no npm installation requirement. The owner confirmed that enquiries should remain enquiry-based; booking and payments are intentionally deferred.
+Deploy this repository root to a static host. Clean URLs use folder/index.html.
+Edit the HTML, style.css, app.js and services.json files directly. No build step is required.
+
+PROPOSAL COVERAGE
+1. Professional service platform: implemented as an informational site with guided enquiry journeys.
+2. Objectives: professional design, structured navigation and service discovery implemented.
+3. Structure: Home, Services, eight service pages, Who We Serve, International, About, Resources, Contact, Privacy and Disclaimer.
+4. Service discovery: all eight proposed service categories; scope, audience, preparation, process and FAQs on individual pages.
+5. Phase 2 financial tools: cash runway, break-even and user-entered-rate tax arithmetic implemented. Statutory income-tax/TDS calculators, HSN/SAC database and tax-regime comparisons deferred pending reviewed rules and maintained datasets.
+6. Client / solution discovery: profiles for startups, growing businesses, individuals/professionals and international businesses.
+7. Consultation journey: service, engagement format, meeting preference, date/time/time zone and requirement capture. Prepares an email; does not confirm live availability, send automatically or take payment.
+8. Service purchase: engagement formats and proposal requests implemented. Fixed package scope/prices and checkout require owner decisions and payment integration.
+9. Enquiry: existing Tally form retained from the live website, plus direct contact paths and a structured consultation request. Provider submission and delivery not tested with a real enquiry.
+10. Payment system: not connected. Gateway, fees, taxes, merchant details, receipt/invoice workflow, refunds and webhook verification must be configured before accepting money.
+11. Smart lead capture: contextual service and engagement request builder. Automatic acknowledgement, lead routing, CRM and document upload require connected services.
+12. International: India, US and UAE positioning, with local responsibilities established in engagement scope. No invented overseas office or local licence claims.
+13. Trust: founder profile and credentials adapted from the current public site. Owner should verify credentials remain current. No invented testimonials, client logos, team members or portraits. Real approved assets remain to be supplied.
+14. Resources: document finder, planning tools, official portal links, FAQs and user-entered deadline reminders. No fabricated articles or statutory updates. A CMS/editorial workflow is not configured.
+15. FAQ system: service-level and general FAQs implemented.
+16. Document finder: service, entity type and first/ongoing engagement selections; interactive checklist and text download. Lists are indicative and need final professional review. No sensitive uploads collected.
+17. Statutory eligibility checker: not implemented. Profile recommendations do not purport to determine legal eligibility. Requires reviewed criteria by service and year.
+18. Compliance checklist: business-type discussion checklist implemented, explicitly indicative rather than a determination of obligations.
+19. Deadline tracker: user enters a verified date and source; downloads an all-day calendar event with a one-day reminder. No statutory deadline feed, server scheduling or automatic notification service connected.
+20. Communication: existing Tally embed, email, click-to-call and WhatsApp links. Live calendar and gateway integrations remain to be connected.
+21. Responsive experience: tested in Chrome at 1440px and 390px widths; mobile overflow checked across all 17 pages.
+22. SEO foundation: unique titles/descriptions, heading structure, readable URLs, internal links, AccountingService JSON-LD, favicon and sitemap. Public pages have index,follow, canonical URLs and an allow-crawl robots file with the sitemap URL.
+23. Analytics / Search Console: not connected; requires account/property IDs and tracking/privacy decisions. No analytics data is fabricated.
+24. Performance / security: lightweight static pages, no application secrets or upload storage, field validation and encoded email/calendar output. Hosting supplies HTTPS. Production security headers, spam protections for final form provider, retention policy and backups need final hosting/provider configuration.
+25. Future modules: client login/dashboard, document management, status tracking, CRM, automated WhatsApp/email and onboarding are future integrations, not represented as working features.
+26. Overall journey: Discover -> Choose -> Enquire / Request consultation implemented. Pay -> automatic confirmation -> fulfilment remain conditional on live service integrations.
+
+BRANDING
+Website applies a consistent navy / warm ivory / muted gold palette, serif headings, sans-serif body text, typographic ab. monogram, favicon and coherent graphical treatment. The monogram is a draft identity direction. Colours and type can be changed centrally in style.css.
+The branding PDF also lists stationery, invoice/quotation/certificate templates, staff assets and social templates. Those are separate deliverables and are not included in this website build.
+No Divuzl branding, commercial terms or agency approval procedures were treated as instructions to this assistant.
+
+PUBLIC LAUNCH INPUTS
+- Approved domain/hosting access and a migration decision; preserve the current site until replacement is approved.
+- Confirm founder credentials and all service copy; provide actual founder/office images and any approved brand files.
+- Scheduler link/account, calendar availability, meeting durations and fee policy.
+- Approved package scope/pricing and payment gateway account if online purchase is wanted.
+- Email/CRM routing, acknowledgement provider and secure document-sharing workflow.
+- Analytics and Search Console account details if tracking is wanted.
+- Professional review of statutory tools, document lists, privacy text and any proposed promotional content before public release.
+
+CONTENT SOURCES
+Three supplied Divuzl PDFs (13 + 4 + 12 pages), visually reviewed in full.
+Existing public website: https://www.caabhishekbajaj.com/ reviewed 16 October 2026.
+Existing contact details and Tally form were reused. No website content was submitted as a test enquiry.
+
+TESTED
+17 routes load with one H1 each. JavaScript syntax check passes.
+Desktop/mobile screenshots inspected. Service finder, contextual selection, checklist generation/download, calculator formulas/zero inputs, business-type checklist, mobile menu/Escape and consultation email preparation tested. No email sent.
+Live third-party form delivery, payment, actual bookings, production analytics and custom domain migration are not verified.
